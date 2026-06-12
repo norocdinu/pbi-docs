@@ -1,0 +1,17 @@
+{
+  "name": "pbi-docs",
+  "owner": {
+    "name": "Dinu Noroc",
+    "email": "dinu.noroc@gmail.com"
+  },
+  "metadata": {
+    "description": "Power BI documentation tooling for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "pbi-docs",
+      "source": "./",
+      "description": "Power BI report documentation workflow: documenter + verifier agents, handover-docs skill, and a /pbi-docs:document-report command that runs the full loop."
+    }
+  ]
+}

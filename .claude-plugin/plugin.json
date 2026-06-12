@@ -1,0 +1,8 @@
+{
+  "name": "pbi-docs",
+  "description": "Power BI report documentation workflow: documenter + verifier agents, handover-docs skill, and a /pbi-docs:document-report command that runs the full loop.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Dinu"
+  }
+}
