@@ -6,10 +6,14 @@ A Claude Code plugin that documents Power BI reports using a generator + critic 
 
 | Component | Name | Role |
 |---|---|---|
-| Agent | `handover-documenter` | Reads the .pbip (TMDL/PBIR or legacy), gathers business context, drafts the doc per the handbook template |
+| Agent | `handover-documenter` | Reads the .pbip (TMDL/PBIR or legacy); runs in recon mode (surfaces a Discovery Report of gaps + irrelevant-section candidates) or write mode (drafts the doc per the handbook template from the user's answers) |
 | Agent | `handover-verifier` | Independent auditor: checks handbook compliance AND ground-truths claims against the .pbip files |
 | Skill | `handover-docs` | The shared standard: handbook rules, template, quality checklist |
-| Command | `/pbi-docs:document-report <path>` | Runs the full documenter → verifier loop (max 2 fix rounds) |
+| Command | `/pbi-docs:document-report <path>` | Interview-first loop: recon → interview the user → confirm → draft → verify → refine until done |
+
+## How the command works
+
+The command is **interview-first** — it gathers context and confirms scope with you *before* writing, instead of producing a document full of TODOs. It (1) reads the report and surfaces what it can't determine, (2) asks you for the missing context and whether you have additional documents/Jira/exports, (3) confirms which irrelevant sections to omit, then (4) drafts, verifies, and (5) loops with you to resolve any remaining `⚠️ TODO` notes until you're happy.
 
 ## Usage
 
@@ -19,33 +23,21 @@ A Claude Code plugin that documents Power BI reports using a generator + critic 
 
 If your report is a `.pbix`, re-save it first: Power BI Desktop → File → Save As → "Power BI project files (.pbip)".
 
-## ⚠️ Before first use
+## The handbook standard
 
-`skills/handover-docs/SKILL.md` and `template.md` contain `TODO` markers — they must be populated from the team's handover handbook. Until then, the verifier audits against a default checklist, not your official standard.
+`skills/handover-docs/SKILL.md` and `template.md` encode the team's **Data Storytelling Handover Handbook** — its sections, rules, and quality checklist. Keep them in sync with the handbook as it evolves; the verifier audits every document against this standard.
 
-## Install
+## Install (team, via private marketplace)
 
-In any Claude Code session, run these two lines:
-
-```
-/plugin marketplace add norocdinu/pbi-docs
-/plugin install pbi-docs@pbi-docs
-```
-
-That's it — the agents, skill, and `/pbi-docs:document-report` command are now available.
-
-Prefer the terminal? The same thing without opening a session:
-
-```bash
-claude plugin marketplace add norocdinu/pbi-docs
-claude plugin install pbi-docs@pbi-docs
-```
-
-To update later, after new commits are pushed:
-
-```
-/plugin marketplace update pbi-docs
-```
+1. Host this plugin in a git repo your team can access.
+2. Add the marketplace once per machine:
+   ```
+   /plugin marketplace add <org>/<repo>
+   ```
+3. Install:
+   ```
+   /plugin install pbi-docs
+   ```
 
 ## Local development / testing
 
