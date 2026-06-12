@@ -27,17 +27,29 @@ If your report is a `.pbix`, re-save it first: Power BI Desktop → File → Sav
 
 `skills/handover-docs/SKILL.md` and `template.md` encode the team's **Data Storytelling Handover Handbook** — its sections, rules, and quality checklist. Keep them in sync with the handbook as it evolves; the verifier audits every document against this standard.
 
-## Install (team, via private marketplace)
+## Install (team, via marketplace)
 
-1. Host this plugin in a git repo your team can access.
-2. Add the marketplace once per machine:
-   ```
-   /plugin marketplace add <org>/<repo>
-   ```
-3. Install:
-   ```
-   /plugin install pbi-docs
-   ```
+In any Claude Code session, run these two lines:
+
+```
+/plugin marketplace add norocdinu/pbi-docs
+/plugin install pbi-docs@pbi-docs
+```
+
+That's it — the agents, skill, and `/pbi-docs:document-report` command are now available.
+
+Prefer the terminal? The same thing without opening a session:
+
+```bash
+claude plugin marketplace add norocdinu/pbi-docs
+claude plugin install pbi-docs@pbi-docs
+```
+
+To update later, after new commits are pushed (a [version bump](#versioning) is required for updates to appear):
+
+```
+/plugin marketplace update pbi-docs
+```
 
 ## Local development / testing
 
