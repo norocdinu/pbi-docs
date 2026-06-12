@@ -45,11 +45,26 @@ claude plugin marketplace add norocdinu/pbi-docs
 claude plugin install pbi-docs@pbi-docs
 ```
 
-To update later, after new commits are pushed (a [version bump](#versioning) is required for updates to appear):
+## Update
+
+When new changes have been pushed, update in any Claude Code session:
 
 ```
 /plugin marketplace update pbi-docs
+/plugin update pbi-docs@pbi-docs
 ```
+
+1. `marketplace update` re-pulls the latest catalog from git.
+2. `plugin update` installs the newest version of the plugin itself.
+
+Or from the terminal, without opening a session:
+
+```bash
+claude plugin marketplace update pbi-docs
+claude plugin update pbi-docs@pbi-docs
+```
+
+> **Note:** updates only appear if the `version` in `.claude-plugin/plugin.json` was bumped (see [Versioning](#versioning)). If `/plugin` reports you're already on the latest, the version wasn't changed.
 
 ## Local development / testing
 
